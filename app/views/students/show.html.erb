@@ -1,1 +1,15 @@
-<%= @student.name %>
+<%= @student.name %></br>
+
+<%= link_to "Create new address", new_student_address_path(@student) %></br>
+
+<% @student.addresses.each do |address| %>
+  <p><%= address.description %></p>
+  <p><%= address.street %></p>
+  <p><%= address.city %></p>
+  <p><%= address.state %></p>
+  <p><%= address.zip %></p>
+<% end %>
+
+<% @student.courses.each do |course| %>
+  <%= course.name %>
+<% end %>

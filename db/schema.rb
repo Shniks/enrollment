@@ -10,10 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180330110335) do
+ActiveRecord::Schema.define(version: 20180330155106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "addresses", force: :cascade do |t|
+    t.text "description"
+    t.text "street"
+    t.text "city"
+    t.text "state"
+    t.integer "zip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "student_id"
+    t.index ["student_id"], name: "index_addresses_on_student_id"
+  end
+
+  create_table "course_students", force: :cascade do |t|
+    t.bigint "student_id"
+    t.bigint "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_course_students_on_course_id"
+    t.index ["student_id"], name: "index_course_students_on_student_id"
+  end
+
+  create_table "courses", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "students", force: :cascade do |t|
     t.string "name"
@@ -21,4 +48,7 @@ ActiveRecord::Schema.define(version: 20180330110335) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "addresses", "students"
+  add_foreign_key "course_students", "courses"
+  add_foreign_key "course_students", "students"
 end
